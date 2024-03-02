@@ -2,15 +2,23 @@ import React, { Fragment } from "react";
 import { Button, Table } from "react-bootstrap";
 import Employees from "./Employees";
 import { Link, useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Home() {
-  let history = useNavigate();
+  let navigate = useNavigate();
+
   const handelDelete = (id) => {
     var index = Employees.map(function (e) {
       return e.id;
     }).indexOf(id);
     Employees.splice(index, 1);
-    history("/");
+    navigate("/");
+  };
+
+  const handelEdit = (id, name, age) => {
+    localStorage.setItem("Name", name);
+    localStorage.setItem("Age", age);
+    localStorage.setItem("Id", id);
   };
 
   return (
@@ -37,7 +45,13 @@ function Home() {
                       <td>{item.Age}</td>
                       <td>
                         <Link to={"/edit"}>
-                          <Button onClick={() => alert(item.id)}>Edit</Button>
+                          <Button
+                            onClick={() =>
+                              handelEdit(item.id, item.Name, item.Age)
+                            }
+                          >
+                            Edit
+                          </Button>
                         </Link>
                         <Button onClick={() => handelDelete(item.id)}>
                           Delete
