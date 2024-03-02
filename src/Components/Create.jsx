@@ -7,14 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 function Create() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [id, setId] = useState("");
 
   let navigate = useNavigate();
 
-  var index = Employees.map(function (e) {
-    return e.id;
-  }).indexOf(id);
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,11 +27,7 @@ function Create() {
     navigate("/");
   };
 
-  useEffect(() => {
-    setName(localStorage.getItem("Name"));
-    setAge(localStorage.getItem("Age"));
-    setId(localStorage.getItem("Id"));
-  }, []);
+ 
 
   return (
     <div>
@@ -50,6 +41,7 @@ function Create() {
           <Form.Control
             type="text"
             placeholder="Enter Name..."
+            
             required
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
@@ -57,6 +49,7 @@ function Create() {
           <Form.Control
             type="number"
             placeholder="Enter AGE"
+  
             required
             onChange={(e) => setAge(e.target.value)}
           ></Form.Control>

@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Edit = () => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [id, setId] = useState("");
 
@@ -21,6 +22,7 @@ const Edit = () => {
 
     let a = Employees[index];
     a.Name = name;
+    a.Email = email;
     a.Age = age;
 
     navigate("/");
@@ -28,6 +30,7 @@ const Edit = () => {
 
   useEffect(() => {
     setName(localStorage.getItem("Name"));
+     setEmail(localStorage.getItem("Email"));
     setAge(localStorage.getItem("Age"));
     setId(localStorage.getItem("Id"));
   }, []);
@@ -48,6 +51,15 @@ const Edit = () => {
             required
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
+
+          <Form.Control
+            type="email"
+            placeholder="Enter Email..."
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          ></Form.Control>
+
 
           <Form.Control
             type="number"

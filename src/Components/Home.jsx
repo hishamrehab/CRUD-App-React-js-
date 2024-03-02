@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import Employees from "./Employees";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,8 +15,9 @@ function Home() {
     navigate("/");
   };
 
-  const handelEdit = (id, name, age) => {
+  const handelEdit = (id, name, email, age) => {
     localStorage.setItem("Name", name);
+    localStorage.setItem("Email", email);
     localStorage.setItem("Age", age);
     localStorage.setItem("Id", id);
   };
@@ -32,6 +33,7 @@ function Home() {
           <thead>
             <tr>
               <th>Name</th>
+              <th>Email</th>
               <th>Age</th>
               <th>Actions </th>
             </tr>
@@ -40,24 +42,33 @@ function Home() {
             {Employees && Employees.length > 0
               ? Employees.map((item) => {
                   return (
-                    <tr>
-                      <td>{item.Name}</td>
-                      <td>{item.Age}</td>
-                      <td>
-                        <Link to={"/edit"}>
-                          <Button
-                            onClick={() =>
-                              handelEdit(item.id, item.Name, item.Age)
-                            }
-                          >
-                            Edit
+                    <>
+                      <tr>
+                        <td>{item.Name}</td>
+                        <td>{item.Email}</td>
+                        <td>{item.Age}</td>
+                        <td>
+                          <Link to={"/edit"}>
+                            <Button
+                              onClick={() =>
+                                handelEdit(
+                                  item.id,
+                                  item.Name,
+
+                                  item.Email,
+                                  item.Age
+                                )
+                              }
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                          <Button onClick={() => handelDelete(item.id)}>
+                            Delete
                           </Button>
-                        </Link>
-                        <Button onClick={() => handelDelete(item.id)}>
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
+                        </td>
+                      </tr>
+                    </>
                   );
                 })
               : "No data to show"}
@@ -65,7 +76,9 @@ function Home() {
         </Table>
         <br></br>
         <Link className="d-grid gap-2" to="/create">
-          <Button size="lg">Create</Button>
+          <Button size="lg" onClick={() => handleCreate(id)}>
+            Create
+          </Button>
         </Link>
       </div>
     </Fragment>
